@@ -29,14 +29,14 @@ curl --get --data-urlencode 'q=Tišnovská 1505/137' --data-urlencode 'limit=10'
 docker compose exec postgis psql -h 127.0.0.1 -p 5432 -d o2p -U o2p
 ```
 
-## Architectural decisions.
+## Architecture:
 services: FastAPI backend, PostGIS, libpostal
 service inter-communication:
   - FastAPI - asyncpg - PostGIS
   - FastAPI - ZeroMQ(zerorpc) - libpostal
 - importing OSM data with osm2pgsql with Lua defined style
 
-## Rationale behind the chosen tech stack.
+## Architecture explanation:
 - web service:
   - python FastAPI for familiarity
   - async - Searching in the database should be just I/O given there is proper indexing, only little logic in python, so it should be able to handle many requests.
@@ -44,7 +44,7 @@ service inter-communication:
 - libpostal - claims to parse and label address data with high accuracy, used by other geocoding projects, fast. Separate service because of memory usage and init time. Chosen ZeroMQ wrapped docker image for speed, and ease to use, though it might be outdated.
 - osm2pgsql - support flexible customization of import with Lua, rather than YAML configuration of imposm3
 
-## Future improvements or scalability strategies.
+## Possible improvements or scalability discussion:
 
 - import relations with boundary=administrative and name tags from OSM
   - to add:
