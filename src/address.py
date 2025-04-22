@@ -18,7 +18,6 @@ def format_address(record):
     if record['country']:
         toks.append(record['country'])
     if toks:
-        return ', '.join(set(toks)) # remove duplicates
+        return ', '.join(toks)
     else:
         "unnamed place"
-
